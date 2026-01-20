@@ -1,0 +1,99 @@
+<div>
+    <div class="container">
+        <div class="header">
+            <h1>BIENVENIDO</h1>
+        </div>
+
+        <div class="views-grid">
+            <div class="card-container">
+                <div class="card-effect">
+                    <div class="card-inner">
+                        <div class="card__liquid"></div>
+                        <div class="card__shine"></div>
+                        <div class="card__glow"></div>
+                        <div class="card__content">
+                            <div class="card__badge">🎯 CARRERA</div>
+                            <div class="card__image"
+                                style="background-image: url('https://i.postimg.cc/CdyRKgBg/Carrera-1.jpg');">
+                            </div>
+
+                            <div class="card__text">
+                                <p class="card__title">Ingrese una Nueva Carrera</p>
+                                <p class="card__description">En esta sección usted podrá ingresar nuevas carreras a la
+                                    base de datos.</p>
+                            </div>
+                            <div class="card__footer">
+                                <div class="card__price"> Ingreso de Nuevas Carreras </div>
+                                <div class="card__button" (click)="irACarrera()">
+                                    <svg viewBox="0 0 24 24" width="16" height="16">
+                                        <path fill="currentColor" d="M5 12H19M12 5V19" stroke="currentColor"
+                                            stroke-width="2"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                
+            </div>
+
+            <div class="card-container">
+                <div class="card-effect">
+                    <div class="card-inner">
+                        <div class="card__liquid"></div>
+                        <div class="card__shine"></div>
+                        <div class="card__glow"></div>
+                        <div class="card__content">
+                            <div class="card__badge">🚀Reporte de Resultados del Plan de Formación y Capacitación Docente</div>
+                            <div class="card__image"
+                                style="background-image: url('https://i.postimg.cc/j2XxzR4P/Documentos.jpg');">
+                            </div>
+                            <div class="card__text">
+                                <p class="card__title">Patrocinios/Plab/Reporte</p>
+                                <p class="card__description">Sección para generar palanes, patrocino y reporte
+                                </p>
+                            </div>
+                            
+                            <div class="card__footer">
+                                <div class="card__price">Patrocinios/Plab/Reporte</div>
+                                <div class="card__button" (click)="irAReporteR()">
+                                    <svg viewBox="0 0 24 24" width="16" height="16">
+                                        <path fill="currentColor" d="M5 12H19M12 5V19" stroke="currentColor"
+                                            stroke-width="2"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            <!--Aqui Siempre puedes Agregar una NuevA Sección si asi se nesesita-->
+        </div>
+        
+    </div>
+    
+
+    <script>
+        function showMore(section) {
+            alert(`Mostrando más información sobre: ${section.toUpperCase()}`);
+            console.log(`Usuario interesado en la sección: ${section}`);
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const cards = document.querySelectorAll('.card-container');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.2}s`;
+            });
+        });
+
+        window.addEventListener('scroll', function () {
+            const scrolled = window.pageYOffset;
+            const header = document.querySelector('.header');
+            header.style.transform = `translateY(${scrolled * 0.5}px)`;
+        });
+    </script>
+</div>

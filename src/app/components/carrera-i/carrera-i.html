@@ -1,0 +1,317 @@
+<div class="form-container">
+  <div class="heading">{{ carreraActual ? 'AGREGAR CAPACITACIONES' : 'CREAR NUEVA CARRERA' }}</div>
+
+  <!-- ⭐ PASO 1: Crear Carrera (solo nombre) -->
+  @if (!carreraActual) {
+    <div class="carrera-form">
+      <input 
+        type="text" 
+        [(ngModel)]="nombreCarrera" 
+        placeholder="Nombre de la carrera (Ej. Software) *" 
+        class="input" />
+      <button type="button" (click)="crearCarrera()" class="login-button">
+        Crear Carrera
+      </button>
+    </div>
+  }
+
+  <!-- ⭐ PASO 2: Agregar Capacitaciones a la carrera -->
+  @if (carreraActual) {
+    <div class="capacitaciones-form">
+      <div class="carrera-actual-info">
+        <h3>📚 Carrera: <strong>{{ carreraActual.nombre }}</strong></h3>
+        <p>Capacitaciones agregadas: {{ carreraActual.capacitaciones.length }}</p>
+      </div>
+
+      <form class="form" #formCapacitacion="ngForm" (ngSubmit)="agregarCapacitacion()">
+        
+        <!-- Nombre de la capacitación -->
+        <input 
+          type="text" 
+          name="nombreCapacitacion" 
+          [(ngModel)]="nombreCapacitacion" 
+          placeholder="Nombre de la capacitación (Ej. APA 7) *" 
+          class="input" 
+          required />
+
+        <!-- Horas -->
+        <input 
+          type="number" 
+          name="horasCapacitacion" 
+          [(ngModel)]="horasCapacitacion" 
+          placeholder="Horas (Ej. 40) *" 
+          class="input" 
+          min="30" 
+          required />
+
+        <!-- Duración -->
+        <input 
+          type="text" 
+          name="duracionCapacitacion" 
+          [(ngModel)]="duracionCapacitacion" 
+          placeholder="Duración (Ej. 2 semanas) *" 
+          class="input" 
+          required />
+
+        <!-- Periodo -->
+        <input 
+          type="text" 
+          name="periodoCapacitacion" 
+          [(ngModel)]="periodoCapacitacion" 
+          placeholder="Periodo (Ej. Mensual) *" 
+          class="input" 
+          required />
+
+        <!-- Tipo -->
+        <input 
+          type="text" 
+          name="tipoCapacitacion" 
+          [(ngModel)]="tipoCapacitacion" 
+          placeholder="Tipo (Ej. Teórico, Práctico) *" 
+          class="input" 
+          required />
+
+        <button type="submit" class="add-button">
+          ➕ Agregar Capacitación
+        </button>
+      </form>
+
+      <!-- Lista de capacitaciones temporales (antes de guardar) -->
+      @if (carreraActual.capacitaciones.length > 0) {
+        <div class="capacitaciones-temporales">
+          <h4>Capacitaciones en esta carrera:</h4>
+          @for (cap of carreraActual.capacitaciones; track $index) {
+            <div class="capacitacion-temp-card">
+              <div class="cap-temp-header">
+                <strong>{{ cap.nombre }}</strong>
+                <button type="button" (click)="eliminarCapacitacionTemporal($index)" class="btn-eliminar-temp">×</button>
+              </div>
+              <div class="cap-temp-details">
+                <span>⏱️ {{ cap.horas }} horas</span>
+                <span>📅 {{ cap.duracion }}</span>
+                <span>🔄 {{ cap.periodo }}</span>
+                <span>📋 {{ cap.tipo }}</span>
+              </div>
+            </div>
+          }
+        </div>
+      }
+
+      <!-- Botones finales -->
+      <div class="form-buttons">
+        <button type="button" (click)="guardarCarreraCompleta()" class="login-button">
+          💾 Guardar Carrera Completa
+        </button>
+        <button type="button" (click)="cancelarCreacion()" class="reset-button">
+          ❌ Cancelar
+        </button>
+      </div>
+    </div>
+  }
+
+  <!-- ⭐ Sección de carreras guardadas -->
+  <div class="careers-section">
+    <button class="toggle-button" (click)="toggleCarreras()">
+      <span>CARRERAS REGISTRADAS ({{ carrerasGuardadas.length }})</span>
+      <svg 
+        class="arrow-icon" 
+        [class.rotated]="carrerasDesplegadas" 
+        width="20" 
+        height="20" 
+        viewBox="0 0 20 20"
+        fill="none">
+        <path 
+          d="M5 7.5L10 12.5L15 7.5" 
+          stroke="currentColor" 
+          stroke-width="2" 
+          stroke-linecap="round"
+          stroke-linejoin="round" />
+      </svg>
+    </button>
+
+    <div class="careers-list-wrapper" [class.expanded]="carrerasDesplegadas">
+      <div class="careers-list-scroll">
+        
+        <!-- Tarjeta por cada carrera -->
+        @for (carrera of carrerasGuardadas; track carrera.id) {
+          <div class="career-card-expanded">
+            <div class="career-header">
+              <h3 class="career-name">{{ carrera.nombre }}</h3>
+              <div class="career-header-actions">
+                <button class="action-btn edit-btn-small" (click)="editarCarrera(carrera)" title="Editar nombre">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <path d="M11 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V20C2 20.5304 2.21071 21.0391 2.58579 21.4142C2.96086 21.7893 3.46957 22 4 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M18.5 2.50001C18.8978 2.10219 19.4374 1.87869 20 1.87869C20.5626 1.87869 21.1022 2.10219 21.5 2.50001C21.8978 2.89784 22.1213 3.4374 22.1213 4.00001C22.1213 4.56262 21.8978 5.10219 21.5 5.50001L12 15L8 16L9 12L18.5 2.50001Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+                <button class="action-btn delete-btn-small" (click)="eliminarCarrera(carrera)" title="Eliminar carrera">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <path d="M3 6H5H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M8 6V4C8 3.46957 8.21071 2.96086 8.58579 2.58579C8.96086 2.21071 9.46957 2 10 2H14C14.5304 2 15.0391 2.21071 15.4142 2.58579C15.7893 2.96086 16 3.46957 16 4V6M19 6V20C19 20.5304 18.7893 21.0391 18.4142 21.4142C18.0391 21.7893 17.5304 22 17 22H7C6.46957 22 5.96086 21.7893 5.58579 21.4142C5.21071 21.0391 5 20.5304 5 20V6H19Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Lista de capacitaciones de esta carrera -->
+            <div class="capacitaciones-list-carrera">
+              @for (cap of carrera.capacitaciones; track $index) {
+                <div class="capacitacion-item">
+                  <div class="capacitacion-content">
+                    <div class="capacitacion-nombre">{{ cap.nombre }}</div>
+                    <div class="capacitacion-detalles">
+                      <span><strong>Horas:</strong> {{ cap.horas }}</span>
+                      <span><strong>Duración:</strong> {{ cap.duracion }}</span>
+                      <span><strong>Periodo:</strong> {{ cap.periodo }}</span>
+                      <span><strong>Tipo:</strong> {{ cap.tipo }}</span>
+                    </div>
+                  </div>
+                  <div class="capacitacion-actions">
+                    <button class="action-btn-mini edit-btn" (click)="editarCapacitacion(carrera, cap, $index)" title="Editar capacitación">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                        <path d="M11 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V20C2 20.5304 2.21071 21.0391 2.58579 21.4142C2.96086 21.7893 3.46957 22 4 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M18.5 2.50001C18.8978 2.10219 19.4374 1.87869 20 1.87869C20.5626 1.87869 21.1022 2.10219 21.5 2.50001C21.8978 2.89784 22.1213 3.4374 22.1213 4.00001C22.1213 4.56262 21.8978 5.10219 21.5 5.50001L12 15L8 16L9 12L18.5 2.50001Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </button>
+                    <button class="action-btn-mini delete-btn" (click)="eliminarCapacitacion(carrera, $index)" title="Eliminar capacitación">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                        <path d="M3 6H5H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8 6V4C8 3.46957 8.21071 2.96086 8.58579 2.58579C8.96086 2.21071 9.46957 2 10 2H14C14.5304 2 15.0391 2.21071 15.4142 2.58579C15.7893 2.96086 16 3.46957 16 4V6M19 6V20C19 20.5304 18.7893 21.0391 18.4142 21.4142C18.0391 21.7893 17.5304 22 17 22H7C6.46957 22 5.96086 21.7893 5.58579 21.4142C5.21071 21.0391 5 20.5304 5 20V6H19Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              }
+
+              <!-- Botón para agregar nueva capacitación -->
+              <button class="btn-agregar-capacitacion" (click)="agregarNuevaCapacitacion(carrera)" title="Agregar nueva capacitación">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Agregar Capacitación</span>
+              </button>
+
+              @if (carrera.capacitaciones.length === 0) {
+                <div class="empty-capacitaciones">
+                  No hay capacitaciones en esta carrera
+                </div>
+              }
+            </div>
+          </div>
+        }
+
+        @if (carrerasGuardadas.length === 0) {
+          <div class="empty-state">
+            📚 No hay carreras registradas aún
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL -->
+@if (mostrarModal) {
+  <div class="modal-overlay" (click)="cerrarModal()">
+    <div 
+      class="modal-content" 
+      [ngClass]="{
+        'modal-success': tipoModal === 'success',
+        'modal-error': tipoModal === 'error',
+        'modal-warning': tipoModal === 'warning',
+        'modal-edit': tipoModal === 'edit',
+        'modal-delete': tipoModal === 'delete',
+        'modal-edit-capacitacion': tipoModal === 'edit-capacitacion',
+        'modal-add-capacitacion': tipoModal === 'add-capacitacion'
+      }" 
+      (click)="$event.stopPropagation()">
+
+      <div class="modal-icon">
+        @if (tipoModal === 'success') {
+          <svg width="60" height="60" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+            <path d="M8 12L11 15L16 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        }
+        @if (tipoModal === 'error') {
+          <svg width="60" height="60" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+            <path d="M15 9L9 15M9 9L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        }
+        @if (tipoModal === 'warning') {
+          <svg width="60" height="60" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2L2 20H22L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M12 9V13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="12" cy="17" r="1" fill="currentColor"/>
+          </svg>
+        }
+        @if (tipoModal === 'edit' || tipoModal === 'edit-capacitacion' || tipoModal === 'add-capacitacion') {
+          <svg width="60" height="60" viewBox="0 0 24 24" fill="none">
+            <path d="M11 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V20C2 20.5304 2.21071 21.0391 2.58579 21.4142C2.96086 21.7893 3.46957 22 4 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M18.5 2.50001C18.8978 2.10219 19.4374 1.87869 20 1.87869C20.5626 1.87869 21.1022 2.10219 21.5 2.50001C21.8978 2.89784 22.1213 3.4374 22.1213 4.00001C22.1213 4.56262 21.8978 5.10219 21.5 5.50001L12 15L8 16L9 12L18.5 2.50001Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        }
+        @if (tipoModal === 'delete') {
+          <svg width="60" height="60" viewBox="0 0 24 24" fill="none">
+            <path d="M3 6H5H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M8 6V4C8 3.46957 8.21071 2.96086 8.58579 2.58579C8.96086 2.21071 9.46957 2 10 2H14C14.5304 2 15.0391 2.21071 15.4142 2.58579C15.7893 2.96086 16 3.46957 16 4V6M19 6V20C19 20.5304 18.7893 21.0391 18.4142 21.4142C18.0391 21.7893 17.5304 22 17 22H7C6.46957 22 5.96086 21.7893 5.58579 21.4142C5.21071 21.0391 5 20.5304 5 20V6H19Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        }
+      </div>
+
+      <h2 class="modal-title">{{ tituloModal }}</h2>
+      <p class="modal-message">{{ mensajeModal }}</p>
+
+      <!-- Formulario de edición de carrera (solo nombre) -->
+      @if (tipoModal === 'edit') {
+        <div class="modal-edit-form">
+          <input type="text" [(ngModel)]="nombreEditado" class="modal-input" placeholder="Nombre de la carrera *"/>
+        </div>
+      }
+
+      <!-- Formulario de edición de capacitación -->
+      @if (tipoModal === 'edit-capacitacion' || tipoModal === 'add-capacitacion') {
+        <div class="modal-edit-form">
+          <input type="text" [(ngModel)]="nombreCapacitacionEditada" class="modal-input" placeholder="Nombre *"/>
+          <input type="number" [(ngModel)]="horasCapacitacionEditada" class="modal-input" placeholder="Horas *" min="30"/>
+          <input type="text" [(ngModel)]="duracionCapacitacionEditada" class="modal-input" placeholder="Duración *"/>
+          <input type="text" [(ngModel)]="periodoCapacitacionEditado" class="modal-input" placeholder="Periodo *"/>
+          <input type="text" [(ngModel)]="tipoCapacitacionEditado" class="modal-input" placeholder="Tipo *"/>
+        </div>
+      }
+
+      <div class="modal-buttons">
+        @if (tipoModal === 'success' || tipoModal === 'error' || tipoModal === 'warning') {
+          <button class="modal-btn modal-btn-primary" (click)="cerrarModal()">Aceptar</button>
+        }
+
+        @if (tipoModal === 'edit') {
+          <button class="modal-btn modal-btn-secondary" (click)="cerrarModal()">Cancelar</button>
+          <button class="modal-btn modal-btn-primary" (click)="confirmarEdicionCarrera()">Guardar</button>
+        }
+
+        @if (tipoModal === 'edit-capacitacion') {
+          <button class="modal-btn modal-btn-secondary" (click)="cerrarModal()">Cancelar</button>
+          <button class="modal-btn modal-btn-primary" (click)="confirmarEdicionCapacitacion()">Guardar</button>
+        }
+
+        @if (tipoModal === 'add-capacitacion') {
+          <button class="modal-btn modal-btn-secondary" (click)="cerrarModal()">Cancelar</button>
+          <button class="modal-btn modal-btn-primary" (click)="confirmarAgregarCapacitacion()">Agregar</button>
+        }
+
+        @if (tipoModal === 'delete') {
+          <button class="modal-btn modal-btn-secondary" (click)="cerrarModal()">Cancelar</button>
+          <button class="modal-btn modal-btn-danger" (click)="confirmarEliminacion()">Eliminar</button>
+        }
+      </div>
+
+      <button class="modal-close" (click)="cerrarModal()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+}
