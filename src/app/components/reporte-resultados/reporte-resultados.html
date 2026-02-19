@@ -1,7 +1,6 @@
 <div class="contenedor-carreras">
   <h2>📋 Carreras Guardadas</h2>
 
-  <!-- Cargando -->
   @if (cargando) {
   <div class="loading">
     <div class="spinner"></div>
@@ -9,7 +8,6 @@
   </div>
   }
 
-  <!-- Sin carreras -->
   @if (!cargando && carrerasGuardadas.length === 0) {
   <div class="sin-carreras">
     <svg width="80" height="80" viewBox="0 0 24 24" fill="none">
@@ -25,7 +23,6 @@
   </div>
   }
 
-  <!-- Lista de carreras -->
   @if (!cargando && carrerasGuardadas.length > 0) {
   <div class="lista-carreras">
     @for (carrera of carrerasGuardadas; track carrera.nombre) {
@@ -71,7 +68,6 @@
   }
 </div>
 
-<!-- Modal -->
 @if (modalAbierto) {
 <div class="modal-overlay" (click)="cerrarModal()">
   <div class="modal-container" (click)="$event.stopPropagation()">
@@ -180,8 +176,6 @@
 
           <div class="docente-acciones">
             <button class="btn-tabla" type="button" (click)="abrirModalPatrocinio(docente)">patrocinio</button>
-            <button class="btn-tabla" type="button">plan individual</button>
-            <button class="btn-tabla" type="button">reporte anual</button>
             <button class="btn-tabla btn-editar-tabla" type="button" (click)="editarDocente(docente)">editar</button>
             <button class="btn-tabla btn-eliminar-tabla" (click)="eliminarDocente(docente.id!)">eliminar</button>
           </div>
@@ -194,12 +188,10 @@
 </div>
 }
 
-<!-- Modal Patrocinio -->
 @if (modalPatrocinioAbierto) {
 <div class="modal-overlay" (click)="cerrarModalPatrocinio()">
   <div class="modal-container-patrocinio" (click)="$event.stopPropagation()">
     
-    <!-- Animación de Generación -->
     @if (generandoDocumento) {
     <div class="loading-overlay">
       <div class="loading-spinner">

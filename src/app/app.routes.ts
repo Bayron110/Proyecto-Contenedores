@@ -5,9 +5,9 @@ import { ReporteResultados } from './components/reporte-resultados/reporte-resul
 
 export const routes: Routes = [
 
-    {path: "home", component: Home},
-    {path:"Carrera", component:CarreraI},
-{path: "ReporteR", component:ReporteResultados},
-    
-    {path: "", redirectTo: "home", pathMatch: "full"},
+    { path: "Home", component: Home },
+    { path: "Carrera", component: CarreraI },
+    { path: "ReporteR", component: ReporteResultados },
+
+    { path: "", redirectTo: "Home", pathMatch: "full" },
 ];

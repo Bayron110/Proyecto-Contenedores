@@ -7,7 +7,7 @@ import { Documento } from '../../Interface/documentos';
   providedIn: 'root'
 })
 export class DocumentosService {
-  private apiUrl = "https://baken-ugpa-career.onrender.com/api/documentos";
+  private apiUrl = "http://localhost:8080/api/documentos";
 
   constructor(private http: HttpClient) {}
 
@@ -26,7 +26,7 @@ export class DocumentosService {
 
   descargarDocumento(fileId: string): Observable<Blob> {
   return this.http.get(
-    `https://baken-ugpa-career.onrender.com/api/documentos/download/${fileId}`,
+    `http://localhost:8080/api/documentos/download/${fileId}`,
     { responseType: 'blob' }
   );
 }

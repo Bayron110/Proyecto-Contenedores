@@ -1,7 +1,6 @@
 <div class="form-container">
   <div class="heading">{{ carreraActual ? 'AGREGAR CAPACITACIONES' : 'CREAR NUEVA CARRERA' }}</div>
 
-  <!-- ⭐ PASO 1: Crear Carrera (solo nombre) -->
   @if (!carreraActual) {
     <div class="carrera-form">
       <input 
@@ -15,7 +14,6 @@
     </div>
   }
 
-  <!-- ⭐ PASO 2: Agregar Capacitaciones a la carrera -->
   @if (carreraActual) {
     <div class="capacitaciones-form">
       <div class="carrera-actual-info">
@@ -25,7 +23,6 @@
 
       <form class="form" #formCapacitacion="ngForm" (ngSubmit)="agregarCapacitacion()">
         
-        <!-- Nombre de la capacitación -->
         <input 
           type="text" 
           name="nombreCapacitacion" 
@@ -34,7 +31,6 @@
           class="input" 
           required />
 
-        <!-- Horas -->
         <input 
           type="number" 
           name="horasCapacitacion" 
@@ -44,7 +40,6 @@
           min="30" 
           required />
 
-        <!-- Duración -->
         <input 
           type="text" 
           name="duracionCapacitacion" 
@@ -53,7 +48,6 @@
           class="input" 
           required />
 
-        <!-- Periodo -->
         <input 
           type="text" 
           name="periodoCapacitacion" 
@@ -62,7 +56,6 @@
           class="input" 
           required />
 
-        <!-- Tipo -->
         <input 
           type="text" 
           name="tipoCapacitacion" 
@@ -72,11 +65,10 @@
           required />
 
         <button type="submit" class="add-button">
-          ➕ Agregar Capacitación
+          ➕ 🤣 Agregar Capacitación
         </button>
       </form>
 
-      <!-- Lista de capacitaciones temporales (antes de guardar) -->
       @if (carreraActual.capacitaciones.length > 0) {
         <div class="capacitaciones-temporales">
           <h4>Capacitaciones en esta carrera:</h4>
@@ -97,7 +89,6 @@
         </div>
       }
 
-      <!-- Botones finales -->
       <div class="form-buttons">
         <button type="button" (click)="guardarCarreraCompleta()" class="login-button">
           💾 Guardar Carrera Completa
@@ -109,7 +100,7 @@
     </div>
   }
 
-  <!-- ⭐ Sección de carreras guardadas -->
+
   <div class="careers-section">
     <button class="toggle-button" (click)="toggleCarreras()">
       <span>CARRERAS REGISTRADAS ({{ carrerasGuardadas.length }})</span>
@@ -132,7 +123,7 @@
     <div class="careers-list-wrapper" [class.expanded]="carrerasDesplegadas">
       <div class="careers-list-scroll">
         
-        <!-- Tarjeta por cada carrera -->
+
         @for (carrera of carrerasGuardadas; track carrera.id) {
           <div class="career-card-expanded">
             <div class="career-header">
@@ -153,7 +144,6 @@
               </div>
             </div>
 
-            <!-- Lista de capacitaciones de esta carrera -->
             <div class="capacitaciones-list-carrera">
               @for (cap of carrera.capacitaciones; track $index) {
                 <div class="capacitacion-item">
@@ -183,7 +173,6 @@
                 </div>
               }
 
-              <!-- Botón para agregar nueva capacitación -->
               <button class="btn-agregar-capacitacion" (click)="agregarNuevaCapacitacion(carrera)" title="Agregar nueva capacitación">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                   <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -210,7 +199,6 @@
   </div>
 </div>
 
-<!-- MODAL -->
 @if (mostrarModal) {
   <div class="modal-overlay" (click)="cerrarModal()">
     <div 
@@ -263,14 +251,12 @@
       <h2 class="modal-title">{{ tituloModal }}</h2>
       <p class="modal-message">{{ mensajeModal }}</p>
 
-      <!-- Formulario de edición de carrera (solo nombre) -->
       @if (tipoModal === 'edit') {
         <div class="modal-edit-form">
           <input type="text" [(ngModel)]="nombreEditado" class="modal-input" placeholder="Nombre de la carrera *"/>
         </div>
       }
 
-      <!-- Formulario de edición de capacitación -->
       @if (tipoModal === 'edit-capacitacion' || tipoModal === 'add-capacitacion') {
         <div class="modal-edit-form">
           <input type="text" [(ngModel)]="nombreCapacitacionEditada" class="modal-input" placeholder="Nombre *"/>

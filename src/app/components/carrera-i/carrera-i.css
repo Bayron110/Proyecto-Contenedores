@@ -40,7 +40,6 @@
   border-inline: 2px solid #12b1d1;
 }
 
-/* Botones del formulario */
 .form-buttons {
   display: flex;
   gap: 10px;
@@ -93,7 +92,6 @@
   box-shadow: rgba(108, 117, 125, 0.5) 0px 15px 10px -10px;
 }
 
-/* Estilos para la sección desplegable */
 .careers-section {
   margin-top: 30px;
 }
@@ -129,7 +127,6 @@
   transform: rotate(180deg);
 }
 
-/* ⭐ Wrapper para la lista con transición suave */
 .careers-list-wrapper {
   max-height: 0;
   overflow: hidden;
@@ -142,7 +139,6 @@
   margin-top: 15px;
 }
 
-/* ⭐ Contenedor con scroll interno */
 .careers-list-scroll {
   max-height: 500px;
   overflow-y: auto;
@@ -150,7 +146,6 @@
   padding-right: 5px;
 }
 
-/* Estilo personalizado del scrollbar */
 .careers-list-scroll::-webkit-scrollbar {
   width: 8px;
 }
@@ -169,7 +164,6 @@
   background: linear-gradient(45deg, #0d6fa8 0%, #0e8fa3 100%);
 }
 
-/* Tarjetas de carrera mejoradas */
 .career-card {
   background: white;
   border-radius: 15px;
@@ -295,7 +289,6 @@
   font-style: italic;
 }
 
-/* ⭐ Nuevos estilos para el sistema de capacitaciones */
 .carrera-actual-info {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
@@ -401,7 +394,6 @@
   border-radius: 8px;
 }
 
-/* Estilos para carreras expandidas */
 .career-card-expanded {
   background: white;
   border-radius: 15px;
@@ -537,7 +529,6 @@
   font-style: italic;
 }
 
-/* Estilos del Modal */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -630,7 +621,6 @@
   line-height: 1.5;
 }
 
-/* Formulario de edición en modal */
 .modal-edit-form {
   display: flex;
   flex-direction: column;
@@ -742,7 +732,6 @@
   height: 20px;
 }
 
-/* ⭐ Estilos para sistema de capacitaciones */
 .capacitaciones-section {
   margin-top: 15px;
 }
@@ -839,7 +828,6 @@
   padding: 8px;
 }
 
-/* Badges de capacitaciones en tarjetas */
 .career-capacitaciones {
   display: flex;
   flex-wrap: wrap;
@@ -857,7 +845,6 @@
   box-shadow: rgba(102, 126, 234, 0.3) 0px 3px 8px -2px;
 }
 
-/* Estilos para modal de edición */
 .modal-capacitaciones-section {
   text-align: left;
 }
@@ -902,7 +889,6 @@
   min-height: 40px;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .form-container {
     max-width: 95%;

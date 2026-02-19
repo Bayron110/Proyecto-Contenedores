@@ -14,32 +14,26 @@ import { Capacitacion } from '../../Interface/Capacitacion';
   styleUrls: ['./carrera-i.css'] 
 })
 export class CarreraI implements OnInit {
-  // ⭐ PASO 1: Crear la carrera (solo nombre)
   nombreCarrera: string = '';
   carreraActual: Career | null = null;
   
-  // ⭐ PASO 2: Agregar capacitaciones a la carrera actual
   nombreCapacitacion: string = '';
   horasCapacitacion: number | null = null;
   duracionCapacitacion: string = '';
   periodoCapacitacion: string = '';
   tipoCapacitacion: string = '';
   
-  // Lista de carreras guardadas
   carrerasGuardadas: Career[] = [];
   carrerasDesplegadas: boolean = false;
   
-  // Control del modal
   mostrarModal: boolean = false;
   tituloModal: string = '';
   mensajeModal: string = '';
   tipoModal: 'success' | 'error' | 'warning' | 'edit' | 'delete' | 'edit-capacitacion' | 'add-capacitacion' = 'success';
   
-  // Datos de edición
   carreraEnEdicion: Career | null = null;
   nombreEditado: string = '';
   
-  // Para agregar nueva capacitación a carrera existente
   carreraParaAgregar: Career | null = null;
   
   capacitacionEnEdicion: Capacitacion | null = null;
@@ -59,7 +53,6 @@ export class CarreraI implements OnInit {
     this.obtenerCarreras();
   }
 
-  // ========== GESTIÓN DE CARRERA ==========
 
   crearCarrera(): void {
     if (!this.nombreCarrera.trim()) {
@@ -67,7 +60,6 @@ export class CarreraI implements OnInit {
       return;
     }
 
-    // Crear carrera vacía (sin capacitaciones aún)
     this.carreraActual = {
       nombre: this.nombreCarrera.trim(),
       capacitaciones: []
@@ -76,7 +68,6 @@ export class CarreraI implements OnInit {
     this.abrirModal('Éxito', `✅ Carrera "${this.nombreCarrera}" creada. Ahora agrega capacitaciones.`, 'success');
   }
 
-  // ========== GESTIÓN DE CAPACITACIONES ==========
 
   agregarCapacitacion(): void {
     if (!this.carreraActual) {
@@ -84,7 +75,6 @@ export class CarreraI implements OnInit {
       return;
     }
 
-    // Validaciones
     if (!this.nombreCapacitacion.trim()) {
       this.abrirModal('Advertencia', '⚠️ El nombre de la capacitación no puede estar vacío', 'warning');
       return;
@@ -110,7 +100,6 @@ export class CarreraI implements OnInit {
       return;
     }
 
-    // Crear objeto capacitación
     const nuevaCapacitacion: Capacitacion = {
       nombre: this.nombreCapacitacion.trim(),
       horas: this.horasCapacitacion,
@@ -119,10 +108,8 @@ export class CarreraI implements OnInit {
       tipo: this.tipoCapacitacion.trim()
     };
 
-    // Agregar a la carrera actual
     this.carreraActual.capacitaciones.push(nuevaCapacitacion);
 
-    // Limpiar campos de capacitación
     this.limpiarFormularioCapacitacion();
 
     this.abrirModal('Éxito', `✅ Capacitación "${nuevaCapacitacion.nombre}" agregada`, 'success');
@@ -147,7 +134,6 @@ export class CarreraI implements OnInit {
       return;
     }
 
-    // Guardar en el backend
     this.careerService.guardarCarrera(this.carreraActual).subscribe({
       next: (response) => {
         this.abrirModal('Éxito', '✅ Carrera guardada exitosamente con todas sus capacitaciones', 'success');
@@ -164,8 +150,6 @@ export class CarreraI implements OnInit {
     });
   }
 
-  // ========== AGREGAR NUEVA CAPACITACIÓN A CARRERA EXISTENTE ==========
-
   agregarNuevaCapacitacion(carrera: Career): void {
     this.carreraParaAgregar = { ...carrera };
     this.nombreCapacitacionEditada = '';
@@ -181,7 +165,6 @@ export class CarreraI implements OnInit {
   }
 
   confirmarAgregarCapacitacion(): void {
-    // Validar campos
     if (!this.nombreCapacitacionEditada.trim()) {
       this.abrirModal('Advertencia', '⚠️ El nombre no puede estar vacío', 'warning');
       return;
@@ -212,7 +195,6 @@ export class CarreraI implements OnInit {
       return;
     }
 
-    // Crear nueva capacitación
     const nuevaCapacitacion: Capacitacion = {
       nombre: this.nombreCapacitacionEditada.trim(),
       horas: this.horasCapacitacionEditada,
@@ -221,11 +203,9 @@ export class CarreraI implements OnInit {
       tipo: this.tipoCapacitacionEditado.trim()
     };
 
-    // Crear carrera actualizada con la nueva capacitación
     const carreraActualizada = { ...this.carreraParaAgregar };
     carreraActualizada.capacitaciones.push(nuevaCapacitacion);
 
-    // Actualizar en el backend
     this.careerService.actualizarCarrera(this.carreraParaAgregar.id, carreraActualizada).subscribe({
       next: (response) => {
         this.cerrarModal();
@@ -240,7 +220,6 @@ export class CarreraI implements OnInit {
     });
   }
 
-  // ========== CRUD OPERACIONES ==========
 
   obtenerCarreras(): void {
     this.careerService.obtenerCarreras().subscribe({
@@ -328,7 +307,6 @@ export class CarreraI implements OnInit {
       return;
     }
 
-    // Actualizar la capacitación en el array
     const carreraActualizada = { ...this.carreraEnEdicion };
     carreraActualizada.capacitaciones[this.indiceCapacitacionEdicion] = {
       nombre: this.nombreCapacitacionEditada.trim(),
@@ -399,7 +377,6 @@ export class CarreraI implements OnInit {
     });
   }
 
-  // ========== CONTROL DE UI ==========
 
   toggleCarreras(): void {
     this.carrerasDesplegadas = !this.carrerasDesplegadas;

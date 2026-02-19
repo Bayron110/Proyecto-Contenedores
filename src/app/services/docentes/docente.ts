@@ -7,7 +7,7 @@ import { Docente } from '../../Interface/Docente';
   providedIn: 'root'
 })
 export class DocenteService {
-  private apiUrl = 'https://baken-ugpa-career.onrender.com/api/docentes';
+  private apiUrl = 'http://localhost:8080/api/docentes';
 
   constructor(private http: HttpClient) {}
 

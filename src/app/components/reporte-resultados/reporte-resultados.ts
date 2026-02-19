@@ -36,7 +36,7 @@ export class ReporteResultados implements OnInit {
   periodo = '';
 
   docentes: Docente[] = [];
-  todosLosDocentes: Docente[] = []; // Para contar el total y generar secuencia
+  todosLosDocentes: Docente[] = []; 
 
   mostrarFormularioDocente = false;
   docenteEditando: Docente | null = null;
@@ -189,18 +189,26 @@ export class ReporteResultados implements OnInit {
     this.periodo = '';
   }
 
-  eliminarDocente(id: string): void {
-    this.docenteService.eliminarDocente(id).subscribe({
-      next: () => {
-        this.docentes = this.docentes.filter(d => d.id !== id);
-        this.obtenerTodosLosDocentes();
-        this.cdr.detectChanges();
-      },
-      error: (err) => {
-        console.error('❌ Error al eliminar docente:', err);
-      }
-    });
-  }
+eliminarDocente(id: string): void {
+  if (!this.carreraSeleccionada) return;
+
+  this.docenteService.eliminarDocente(id).subscribe({
+    next: () => {
+      // 🔹 Recargar lista desde el backend
+      this.docenteService.obtenerPorCarrera(this.carreraSeleccionada!.id!).subscribe({
+        next: (data) => {
+          this.docentes = data;
+          this.obtenerTodosLosDocentes(); // refresca también la lista global
+          this.cdr.detectChanges();
+        },
+        error: (err) => console.error('❌ Error al recargar docentes:', err)
+      });
+    },
+    error: (err) => {
+      console.error('❌ Error al eliminar docente:', err);
+    }
+  });
+}
 
   toggleFormularioDocente(): void {
     this.mostrarFormularioDocente = !this.mostrarFormularioDocente;
@@ -235,7 +243,8 @@ export class ReporteResultados implements OnInit {
     this.codigoGenerado = '';
   }
 
-  generarCodigo(): void {
+generarCodigo(): void {
+
   if (!this.docenteSeleccionado?.secuencia) return;
 
   const sec = this.docenteSeleccionado.secuencia
@@ -246,6 +255,8 @@ export class ReporteResultados implements OnInit {
 
   this.codigoGenerado = `UGPA-RGI2-${sec}-PRO134-${this.anio}-${mesFormateado}`;
 }
+
+
 
 
   generarPatrocinio(): void {
@@ -291,10 +302,8 @@ export class ReporteResultados implements OnInit {
               mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
             });
 
-            // Descargar como Word
             saveAs(output, `${this.codigoGenerado}-${this.docenteSeleccionado!.nombre}.docx`);
             
-            // Ocultar animación
             this.generandoDocumento = false;
             
             alert('✅ Documento generado exitosamente');
