@@ -3,10 +3,10 @@
 
   @if (!carreraActual) {
     <div class="carrera-form">
-      <input 
-        type="text" 
-        [(ngModel)]="nombreCarrera" 
-        placeholder="Nombre de la carrera (Ej. Software) *" 
+      <input
+        type="text"
+        [(ngModel)]="nombreCarrera"
+        placeholder="Nombre de la carrera (Ej. Software) *"
         class="input" />
       <button type="button" (click)="crearCarrera()" class="login-button">
         Crear Carrera
@@ -17,72 +17,74 @@
   @if (carreraActual) {
     <div class="capacitaciones-form">
       <div class="carrera-actual-info">
-        <h3>📚 Carrera: <strong>{{ carreraActual.nombre }}</strong></h3>
-        <p>Capacitaciones agregadas: {{ carreraActual.capacitaciones.length }}</p>
+        <h3>Carrera: <strong>{{ carreraActual.nombre }}</strong></h3>
+        <p>{{ carreraActual.capacitaciones.length }} capacitaciones agregadas</p>
       </div>
 
       <form class="form" #formCapacitacion="ngForm" (ngSubmit)="agregarCapacitacion()">
-        
-        <input 
-          type="text" 
-          name="nombreCapacitacion" 
-          [(ngModel)]="nombreCapacitacion" 
-          placeholder="Nombre de la capacitación (Ej. APA 7) *" 
-          class="input" 
+        <input
+          type="text"
+          name="nombreCapacitacion"
+          [(ngModel)]="nombreCapacitacion"
+          placeholder="Nombre de la capacitación (Ej. APA 7) *"
+          class="input"
           required />
-
-        <input 
-          type="number" 
-          name="horasCapacitacion" 
-          [(ngModel)]="horasCapacitacion" 
-          placeholder="Horas (Ej. 40) *" 
-          class="input" 
-          min="30" 
+        <input
+          type="number"
+          name="horasCapacitacion"
+          [(ngModel)]="horasCapacitacion"
+          placeholder="Horas (Ej. 40) *"
+          class="input"
+          min="30"
           required />
-
-        <input 
-          type="text" 
-          name="duracionCapacitacion" 
-          [(ngModel)]="duracionCapacitacion" 
-          placeholder="Duración (Ej. 2 semanas) *" 
-          class="input" 
+        <input
+          type="text"
+          name="duracionCapacitacion"
+          [(ngModel)]="duracionCapacitacion"
+          placeholder="Duración (Ej. 2 semanas) *"
+          class="input"
           required />
-
-        <input 
-          type="text" 
-          name="periodoCapacitacion" 
-          [(ngModel)]="periodoCapacitacion" 
-          placeholder="Periodo (Ej. Mensual) *" 
-          class="input" 
+        <input
+          type="text"
+          name="periodoCapacitacion"
+          [(ngModel)]="periodoCapacitacion"
+          placeholder="Periodo (Ej. Mensual) *"
+          class="input"
           required />
-
-        <input 
-          type="text" 
-          name="tipoCapacitacion" 
-          [(ngModel)]="tipoCapacitacion" 
-          placeholder="Tipo (Ej. Teórico, Práctico) *" 
-          class="input" 
+        <input
+          type="text"
+          name="tipoCapacitacion"
+          [(ngModel)]="tipoCapacitacion"
+          placeholder="Tipo (Ej. Teórico, Práctico) *"
+          class="input"
           required />
 
         <button type="submit" class="add-button">
-          ➕ 🤣 Agregar Capacitación
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Agregar Capacitación
         </button>
       </form>
 
       @if (carreraActual.capacitaciones.length > 0) {
         <div class="capacitaciones-temporales">
-          <h4>Capacitaciones en esta carrera:</h4>
+          <h4>Capacitaciones en esta carrera</h4>
           @for (cap of carreraActual.capacitaciones; track $index) {
             <div class="capacitacion-temp-card">
               <div class="cap-temp-header">
                 <strong>{{ cap.nombre }}</strong>
-                <button type="button" (click)="eliminarCapacitacionTemporal($index)" class="btn-eliminar-temp">×</button>
+                <button type="button" (click)="eliminarCapacitacionTemporal($index)" class="btn-eliminar-temp">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                    <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                  </svg>
+                </button>
               </div>
               <div class="cap-temp-details">
-                <span>⏱️ {{ cap.horas }} horas</span>
-                <span>📅 {{ cap.duracion }}</span>
-                <span>🔄 {{ cap.periodo }}</span>
-                <span>📋 {{ cap.tipo }}</span>
+                <span>{{ cap.horas }} horas</span>
+                <span>{{ cap.duracion }}</span>
+                <span>{{ cap.periodo }}</span>
+                <span>{{ cap.tipo }}</span>
               </div>
             </div>
           }
@@ -91,30 +93,33 @@
 
       <div class="form-buttons">
         <button type="button" (click)="guardarCarreraCompleta()" class="login-button">
-          💾 Guardar Carrera Completa
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M17 21v-8H7v8M7 3v5h8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Guardar Carrera
         </button>
         <button type="button" (click)="cancelarCreacion()" class="reset-button">
-          ❌ Cancelar
+          Cancelar
         </button>
       </div>
     </div>
   }
 
-
   <div class="careers-section">
     <button class="toggle-button" (click)="toggleCarreras()">
       <span>CARRERAS REGISTRADAS ({{ carrerasGuardadas.length }})</span>
-      <svg 
-        class="arrow-icon" 
-        [class.rotated]="carrerasDesplegadas" 
-        width="20" 
-        height="20" 
+      <svg
+        class="arrow-icon"
+        [class.rotated]="carrerasDesplegadas"
+        width="20"
+        height="20"
         viewBox="0 0 20 20"
         fill="none">
-        <path 
-          d="M5 7.5L10 12.5L15 7.5" 
-          stroke="currentColor" 
-          stroke-width="2" 
+        <path
+          d="M5 7.5L10 12.5L15 7.5"
+          stroke="currentColor"
+          stroke-width="2"
           stroke-linecap="round"
           stroke-linejoin="round" />
       </svg>
@@ -122,21 +127,20 @@
 
     <div class="careers-list-wrapper" [class.expanded]="carrerasDesplegadas">
       <div class="careers-list-scroll">
-        
 
         @for (carrera of carrerasGuardadas; track carrera.id) {
           <div class="career-card-expanded">
             <div class="career-header">
               <h3 class="career-name">{{ carrera.nombre }}</h3>
               <div class="career-header-actions">
-                <button class="action-btn edit-btn-small" (click)="editarCarrera(carrera)" title="Editar nombre">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <button class="action-btn-small edit-btn-small" (click)="editarCarrera(carrera)" title="Editar nombre">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
                     <path d="M11 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V20C2 20.5304 2.21071 21.0391 2.58579 21.4142C2.96086 21.7893 3.46957 22 4 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M18.5 2.50001C18.8978 2.10219 19.4374 1.87869 20 1.87869C20.5626 1.87869 21.1022 2.10219 21.5 2.50001C21.8978 2.89784 22.1213 3.4374 22.1213 4.00001C22.1213 4.56262 21.8978 5.10219 21.5 5.50001L12 15L8 16L9 12L18.5 2.50001Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M18.5 2.5C18.8978 2.10218 19.4374 1.87868 20 1.87868C20.5626 1.87868 21.1022 2.10218 21.5 2.5C21.8978 2.89782 22.1213 3.43739 22.1213 4C22.1213 4.56261 21.8978 5.10218 21.5 5.5L12 15L8 16L9 12L18.5 2.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                   </svg>
                 </button>
-                <button class="action-btn delete-btn-small" (click)="eliminarCarrera(carrera)" title="Eliminar carrera">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <button class="action-btn-small delete-btn-small" (click)="eliminarCarrera(carrera)" title="Eliminar carrera">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
                     <path d="M3 6H5H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     <path d="M8 6V4C8 3.46957 8.21071 2.96086 8.58579 2.58579C8.96086 2.21071 9.46957 2 10 2H14C14.5304 2 15.0391 2.21071 15.4142 2.58579C15.7893 2.96086 16 3.46957 16 4V6M19 6V20C19 20.5304 18.7893 21.0391 18.4142 21.4142C18.0391 21.7893 17.5304 22 17 22H7C6.46957 22 5.96086 21.7893 5.58579 21.4142C5.21071 21.0391 5 20.5304 5 20V6H19Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                   </svg>
@@ -145,26 +149,54 @@
             </div>
 
             <div class="capacitaciones-list-carrera">
+              @if (carrera.capacitaciones.length === 0) {
+                <div class="empty-capacitaciones">
+                  Sin capacitaciones aún
+                </div>
+              }
+
               @for (cap of carrera.capacitaciones; track $index) {
                 <div class="capacitacion-item">
                   <div class="capacitacion-content">
                     <div class="capacitacion-nombre">{{ cap.nombre }}</div>
                     <div class="capacitacion-detalles">
-                      <span><strong>Horas:</strong> {{ cap.horas }}</span>
-                      <span><strong>Duración:</strong> {{ cap.duracion }}</span>
-                      <span><strong>Periodo:</strong> {{ cap.periodo }}</span>
-                      <span><strong>Tipo:</strong> {{ cap.tipo }}</span>
+                      <span>
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                          <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        {{ cap.horas }}h
+                      </span>
+                      <span>
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                          <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
+                          <path d="M16 2v4M8 2v4M3 10h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        {{ cap.duracion }}
+                      </span>
+                      <span>
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                          <path d="M3 12a9 9 0 1018 0 9 9 0 00-18 0M3 12h4m10 0h4M12 3v4m0 10v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        {{ cap.periodo }}
+                      </span>
+                      <span>
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                          <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        {{ cap.tipo }}
+                      </span>
                     </div>
                   </div>
                   <div class="capacitacion-actions">
-                    <button class="action-btn-mini edit-btn" (click)="editarCapacitacion(carrera, cap, $index)" title="Editar capacitación">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                    <button class="action-btn-mini edit-btn" (click)="editarCapacitacion(carrera, cap, $index)" title="Editar">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
                         <path d="M11 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V20C2 20.5304 2.21071 21.0391 2.58579 21.4142C2.96086 21.7893 3.46957 22 4 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M18.5 2.50001C18.8978 2.10219 19.4374 1.87869 20 1.87869C20.5626 1.87869 21.1022 2.10219 21.5 2.50001C21.8978 2.89784 22.1213 3.4374 22.1213 4.00001C22.1213 4.56262 21.8978 5.10219 21.5 5.50001L12 15L8 16L9 12L18.5 2.50001Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M18.5 2.5C18.8978 2.10218 19.4374 1.87868 20 1.87868C20.5626 1.87868 21.1022 2.10218 21.5 2.5C21.8978 2.89782 22.1213 3.43739 22.1213 4C22.1213 4.56261 21.8978 5.10218 21.5 5.5L12 15L8 16L9 12L18.5 2.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                       </svg>
                     </button>
-                    <button class="action-btn-mini delete-btn" (click)="eliminarCapacitacion(carrera, $index)" title="Eliminar capacitación">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                    <button class="action-btn-mini delete-btn" (click)="eliminarCapacitacion(carrera, $index)" title="Eliminar">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
                         <path d="M3 6H5H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         <path d="M8 6V4C8 3.46957 8.21071 2.96086 8.58579 2.58579C8.96086 2.21071 9.46957 2 10 2H14C14.5304 2 15.0391 2.21071 15.4142 2.58579C15.7893 2.96086 16 3.46957 16 4V6M19 6V20C19 20.5304 18.7893 21.0391 18.4142 21.4142C18.0391 21.7893 17.5304 22 17 22H7C6.46957 22 5.96086 21.7893 5.58579 21.4142C5.21071 21.0391 5 20.5304 5 20V6H19Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                       </svg>
@@ -173,25 +205,19 @@
                 </div>
               }
 
-              <button class="btn-agregar-capacitacion" (click)="agregarNuevaCapacitacion(carrera)" title="Agregar nueva capacitación">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                  <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <button class="btn-agregar-capacitacion" (click)="agregarNuevaCapacitacion(carrera)">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
                 <span>Agregar Capacitación</span>
               </button>
-
-              @if (carrera.capacitaciones.length === 0) {
-                <div class="empty-capacitaciones">
-                  No hay capacitaciones en esta carrera
-                </div>
-              }
             </div>
           </div>
         }
 
         @if (carrerasGuardadas.length === 0) {
           <div class="empty-state">
-            📚 No hay carreras registradas aún
+            Sin carreras registradas aún
           </div>
         }
       </div>
@@ -199,10 +225,11 @@
   </div>
 </div>
 
+<!-- MODAL -->
 @if (mostrarModal) {
   <div class="modal-overlay" (click)="cerrarModal()">
-    <div 
-      class="modal-content" 
+    <div
+      class="modal-content"
       [ngClass]="{
         'modal-success': tipoModal === 'success',
         'modal-error': tipoModal === 'error',
@@ -211,37 +238,43 @@
         'modal-delete': tipoModal === 'delete',
         'modal-edit-capacitacion': tipoModal === 'edit-capacitacion',
         'modal-add-capacitacion': tipoModal === 'add-capacitacion'
-      }" 
+      }"
       (click)="$event.stopPropagation()">
+
+      <button class="modal-close" (click)="cerrarModal()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+          <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
 
       <div class="modal-icon">
         @if (tipoModal === 'success') {
-          <svg width="60" height="60" viewBox="0 0 24 24" fill="none">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
             <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
             <path d="M8 12L11 15L16 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         }
         @if (tipoModal === 'error') {
-          <svg width="60" height="60" viewBox="0 0 24 24" fill="none">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
             <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
             <path d="M15 9L9 15M9 9L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
           </svg>
         }
         @if (tipoModal === 'warning') {
-          <svg width="60" height="60" viewBox="0 0 24 24" fill="none">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
             <path d="M12 2L2 20H22L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             <path d="M12 9V13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
             <circle cx="12" cy="17" r="1" fill="currentColor"/>
           </svg>
         }
         @if (tipoModal === 'edit' || tipoModal === 'edit-capacitacion' || tipoModal === 'add-capacitacion') {
-          <svg width="60" height="60" viewBox="0 0 24 24" fill="none">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
             <path d="M11 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V20C2 20.5304 2.21071 21.0391 2.58579 21.4142C2.96086 21.7893 3.46957 22 4 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M18.5 2.50001C18.8978 2.10219 19.4374 1.87869 20 1.87869C20.5626 1.87869 21.1022 2.10219 21.5 2.50001C21.8978 2.89784 22.1213 3.4374 22.1213 4.00001C22.1213 4.56262 21.8978 5.10219 21.5 5.50001L12 15L8 16L9 12L18.5 2.50001Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M18.5 2.5C18.8978 2.10218 19.4374 1.87868 20 1.87868C20.5626 1.87868 21.1022 2.10218 21.5 2.5C21.8978 2.89782 22.1213 3.43739 22.1213 4C22.1213 4.56261 21.8978 5.10218 21.5 5.5L12 15L8 16L9 12L18.5 2.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         }
         @if (tipoModal === 'delete') {
-          <svg width="60" height="60" viewBox="0 0 24 24" fill="none">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
             <path d="M3 6H5H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             <path d="M8 6V4C8 3.46957 8.21071 2.96086 8.58579 2.58579C8.96086 2.21071 9.46957 2 10 2H14C14.5304 2 15.0391 2.21071 15.4142 2.58579C15.7893 2.96086 16 3.46957 16 4V6M19 6V20C19 20.5304 18.7893 21.0391 18.4142 21.4142C18.0391 21.7893 17.5304 22 17 22H7C6.46957 22 5.96086 21.7893 5.58579 21.4142C5.21071 21.0391 5 20.5304 5 20V6H19Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
@@ -271,33 +304,23 @@
         @if (tipoModal === 'success' || tipoModal === 'error' || tipoModal === 'warning') {
           <button class="modal-btn modal-btn-primary" (click)="cerrarModal()">Aceptar</button>
         }
-
         @if (tipoModal === 'edit') {
           <button class="modal-btn modal-btn-secondary" (click)="cerrarModal()">Cancelar</button>
           <button class="modal-btn modal-btn-primary" (click)="confirmarEdicionCarrera()">Guardar</button>
         }
-
         @if (tipoModal === 'edit-capacitacion') {
           <button class="modal-btn modal-btn-secondary" (click)="cerrarModal()">Cancelar</button>
           <button class="modal-btn modal-btn-primary" (click)="confirmarEdicionCapacitacion()">Guardar</button>
         }
-
         @if (tipoModal === 'add-capacitacion') {
           <button class="modal-btn modal-btn-secondary" (click)="cerrarModal()">Cancelar</button>
           <button class="modal-btn modal-btn-primary" (click)="confirmarAgregarCapacitacion()">Agregar</button>
         }
-
         @if (tipoModal === 'delete') {
           <button class="modal-btn modal-btn-secondary" (click)="cerrarModal()">Cancelar</button>
           <button class="modal-btn modal-btn-danger" (click)="confirmarEliminacion()">Eliminar</button>
         }
       </div>
-
-      <button class="modal-close" (click)="cerrarModal()">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-          <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-      </button>
     </div>
   </div>
 }
