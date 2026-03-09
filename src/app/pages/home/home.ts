@@ -16,5 +16,7 @@ export class Home {
   irAReporteR():void{
     this.router.navigate(['/ReporteR'])
   }
-
+  irADPF(): void {
+  window.location.href = 'http://localhost:5050/';
+}
 }

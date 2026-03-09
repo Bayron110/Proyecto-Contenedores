@@ -1,15 +1,15 @@
 <div class="form-container">
-  <div class="heading">{{ carreraActual ? 'AGREGAR CAPACITACIONES' : 'CREAR NUEVA CARRERA' }}</div>
+  <div class="heading">{{ carreraActual ? 'AGREGAR CAPACITACIONES' : 'CREAR NUEVO DEPARTAMENTO' }}</div>
 
   @if (!carreraActual) {
     <div class="carrera-form">
       <input
         type="text"
         [(ngModel)]="nombreCarrera"
-        placeholder="Nombre de la carrera (Ej. Software) *"
+        placeholder="Nombre del departamento (Ej. Gestión de talento humano) *"
         class="input" />
       <button type="button" (click)="crearCarrera()" class="login-button">
-        Crear Carrera
+        Nuevo Departamento
       </button>
     </div>
   }
@@ -17,7 +17,7 @@
   @if (carreraActual) {
     <div class="capacitaciones-form">
       <div class="carrera-actual-info">
-        <h3>Carrera: <strong>{{ carreraActual.nombre }}</strong></h3>
+        <h3>Departamento: <strong>{{ carreraActual.nombre }}</strong></h3>
         <p>{{ carreraActual.capacitaciones.length }} capacitaciones agregadas</p>
       </div>
 
@@ -69,7 +69,7 @@
 
       @if (carreraActual.capacitaciones.length > 0) {
         <div class="capacitaciones-temporales">
-          <h4>Capacitaciones en esta carrera</h4>
+          <h4>Capacitaciones en este departamento</h4>
           @for (cap of carreraActual.capacitaciones; track $index) {
             <div class="capacitacion-temp-card">
               <div class="cap-temp-header">
@@ -97,7 +97,7 @@
             <path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             <path d="M17 21v-8H7v8M7 3v5h8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          Guardar Carrera
+          Guardar Departamento
         </button>
         <button type="button" (click)="cancelarCreacion()" class="reset-button">
           Cancelar
@@ -108,7 +108,7 @@
 
   <div class="careers-section">
     <button class="toggle-button" (click)="toggleCarreras()">
-      <span>CARRERAS REGISTRADAS ({{ carrerasGuardadas.length }})</span>
+      <span>DEPARTAMENTOS REGISTRADOS ({{ carrerasGuardadas.length }})</span>
       <svg
         class="arrow-icon"
         [class.rotated]="carrerasDesplegadas"
@@ -217,7 +217,7 @@
 
         @if (carrerasGuardadas.length === 0) {
           <div class="empty-state">
-            Sin carreras registradas aún
+            Sin Departamentos registrados aún
           </div>
         }
       </div>
